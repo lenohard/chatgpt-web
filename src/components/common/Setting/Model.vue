@@ -3,16 +3,12 @@ import { computed, ref } from 'vue'
 import { NButton, NInput, useMessage } from 'naive-ui'
 import { useUserStore } from '@/store'
 import type { ModelInfo } from '@/store/modules/user/helper'
-import { useBasicLayout } from '@/hooks/useBasicLayout'
 import { t } from '@/locales'
 
 const userStore = useUserStore()
 
-const { isMobile } = useBasicLayout()
-
 const ms = useMessage()
 
-const userInfo = computed(() => userStore.userInfo)
 const modelInfo = computed(() => userStore.model)
 
 const model = ref(modelInfo.value.model)
@@ -20,8 +16,6 @@ const model = ref(modelInfo.value.model)
 const temperature = ref(modelInfo.value.temperature)
 
 const max_tokens = ref(modelInfo.value.max_tokens)
-
-const top_p = ref(modelInfo.value.top_p)
 
 function updateModelInfo(options: Partial<ModelInfo>) {
   userStore.updateModelInfo(options)
