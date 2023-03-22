@@ -22,9 +22,9 @@ router.post('/chat-process', [auth, limiter], async (req, res) => {
   res.setHeader('Content-type', 'application/octet-stream')
 
   try {
-    const { prompt, options = {} } = req.body as { prompt: string; options?: ChatContext }
+    const { prompt, model_options = {}, options = {} } = req.body as { prompt: string; model_options?: { model?: string; temperature?: number; max_token?: number }; options?: ChatContext }
     let firstChunk = true
-    await chatReplyProcess(prompt, options, (chat: ChatMessage) => {
+    await chatReplyProcess(prompt, options, model_options, (chat: ChatMessage) => {
       res.write(firstChunk ? JSON.stringify(chat) : `\n${JSON.stringify(chat)}`)
       firstChunk = false
     })

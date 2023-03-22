@@ -66,6 +66,9 @@ export default {
     socks: 'Socks',
     httpsProxy: 'HTTPS Proxy',
     balance: 'API余额',
+    model: '模型',
+    model_temperature: '温度',
+    max_tokens: 'max tokens',
   },
   store: {
     local: '本地',

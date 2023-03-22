@@ -10,8 +10,18 @@ export const useUserStore = defineStore('user-store', {
       this.recordState()
     },
 
+    updateModelInfo(modelInfo: Partial<UserState['model']>) {
+      this.model = { ...this.model, ...modelInfo }
+      this.recordState()
+    },
+
     resetUserInfo() {
       this.userInfo = { ...defaultSetting().userInfo }
+      this.recordState()
+    },
+
+    resetModelInfo() {
+      this.model = { ...defaultSetting().model }
       this.recordState()
     },
 

@@ -70,16 +70,22 @@ let api: ChatGPTAPI | ChatGPTUnofficialProxyAPI
 async function chatReplyProcess(
   message: string,
   lastContext?: { conversationId?: string; parentMessageId?: string },
+  model_options?: { model?: string; temperature?: number; max_tokens?: number },
   process?: (chat: ChatMessage) => void,
 ) {
   try {
     let options: SendMessageOptions = { timeoutMs }
-
     if (lastContext) {
-      if (apiModel === 'ChatGPTAPI')
+      if (apiModel === 'ChatGPTAPI') {
         options = { parentMessageId: lastContext.parentMessageId }
-      else
+        apiKey = api.apiKey
+        apiBaseUrl = api.apiBaseUrl
+        completionParams = model_options
+        api = new ChatGPTAPI({ apiKey, apiBaseUrl, completionParams })
+      }
+      else {
         options = { ...lastContext }
+      }
     }
 
     const response = await api.sendMessage(message, {

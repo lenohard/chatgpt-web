@@ -8,16 +8,34 @@ export interface UserInfo {
   description: string
 }
 
+export interface ModelInfo {
+  model: string
+  temperature: number
+  max_tokens: number
+  top_p: number
+  stop: string[]
+  presence_penalty: number
+}
+
 export interface UserState {
   userInfo: UserInfo
+  model: ModelInfo
 }
 
 export function defaultSetting(): UserState {
   return {
     userInfo: {
-      avatar: '',
+      avatar: 'https://raw.githubusercontent.com/lenohard/imgstore/main/bear_rabbit.jpg',
       name: 'Black Queen',
-      description: 'Evil Queen in Fairy Tales',
+      description: 'Evil Queen in Fables',
+    },
+    model: {
+      model: 'gpt-3.5-turbo',
+      temperature: 0.9,
+      max_tokens: 1000,
+      top_p: 1,
+      stop: [],
+      presence_penalty: 0, // -2.0 to 2.0
     },
   }
 }

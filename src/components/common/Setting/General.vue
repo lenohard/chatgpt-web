@@ -19,10 +19,19 @@ const ms = useMessage()
 const theme = computed(() => appStore.theme)
 
 const userInfo = computed(() => userStore.userInfo)
+const modelInfo = computed(() => userStore.model)
 
 const avatar = ref(userInfo.value.avatar ?? '')
 
 const name = ref(userInfo.value.name ?? '')
+
+const model = ref(modelInfo.value.model)
+
+const temperature = ref(modelInfo.value.temperature)
+
+const max_tokens = ref(modelInfo.value.max_tokens)
+
+const top_p = ref(modelInfo.value.top_p)
 
 const description = ref(userInfo.value.description ?? '')
 

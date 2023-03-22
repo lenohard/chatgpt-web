@@ -12,11 +12,17 @@ import { useUsingContext } from './hooks/useUsingContext'
 import HeaderComponent from './components/Header/index.vue'
 import { HoverButton, SvgIcon } from '@/components/common'
 import { useBasicLayout } from '@/hooks/useBasicLayout'
-import { useChatStore, usePromptStore } from '@/store'
+import { useChatStore, usePromptStore, useUserStore } from '@/store'
 import { fetchChatAPIProcess } from '@/api'
 import { t } from '@/locales'
 
 let controller = new AbortController()
+
+const userStore = useUserStore()
+const modelInfo = computed(() => userStore.model)
+const model = ref(modelInfo.value.model)
+const temperature = ref(modelInfo.value.temperature)
+const max_tokens = ref(modelInfo.value.max_tokens)
 
 const openLongReply = import.meta.env.VITE_GLOB_OPEN_LONG_REPLY === 'true'
 
@@ -110,6 +116,11 @@ async function onConversation() {
       await fetchChatAPIProcess<Chat.ConversationResponse>({
         prompt: message,
         options,
+        model_options: {
+          model: model.value,
+          temperature: Number(temperature.value),
+          max_tokens: Number(max_tokens.value),
+        },
         signal: controller.signal,
         onDownloadProgress: ({ event }) => {
           const xhr = event.target
